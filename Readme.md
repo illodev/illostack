@@ -275,3 +275,31 @@ This configuration sets up a collection of user-related API endpoints with secur
 ## Conclusion
 
 This utility provides a structured and efficient way to build APIs in Next.js using Prisma and Zod. By leveraging TypeScript types and Zod schemas, it ensures type safety and validation, reducing the likelihood of runtime errors and improving code maintainability.
+Future Features
+Automatic Swagger Generation
+
+## Future Features
+
+### Automatic Swagger Generation
+
+Implement automatic Swagger documentation generation to provide API documentation and testing interfaces.
+
+### Pre-processors (Pre Persist)
+
+Add pre-processors that run before persistence to handle data transformations or validations.
+
+### Model-level Configuration
+
+Allow configuration at the model level for more granular control over individual models' behaviors and validations.
+
+### Subresources
+
+Support subresource routing and operations to handle nested resources efficiently.
+
+### Events (onPrePersist, onPostPersist, etc.)
+
+Introduce event hooks such as `onPrePersist` and `onPostPersist` to enable custom logic execution at different points in the data lifecycle.
+
+### WebSocket or Mercure Integration
+
+Integrate WebSocket or Mercure to support real-time data updates and notifications in your API.
