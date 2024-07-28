@@ -1,4 +1,5 @@
-import { Operation, PrismaModelName, Resources } from "../types";
+import { FieldRef } from "@prisma/client/runtime/library";
+import { Config, Operation, PrismaModelName, Resources } from "../types";
 
 function getPathFromRequest({ request }: { request: Request }) {
     return new URL(request.url).pathname;
@@ -8,14 +9,28 @@ const splitPath = (path: string) => {
     return path.split("/").filter((part) => part !== "");
 };
 
+function getFieldsType<TModel extends PrismaModelName>({
+    model,
+    config
+}: {
+    model: TModel;
+    config: Config;
+}) {
+    return config.providers.database[model].fields;
+}
+
 function buildUriVariables<TModel extends PrismaModelName>({
     path,
     operation,
-    prefix
+    prefix,
+    model,
+    config
 }: {
     path: string;
     operation: Operation<TModel>;
     prefix: string;
+    model: TModel;
+    config: Config;
 }) {
     const uriVariables: Record<string, string | number> = {};
 
@@ -29,6 +44,21 @@ function buildUriVariables<TModel extends PrismaModelName>({
     for (let i = 0; i < templateParts.length; i++) {
         if (templateParts[i].startsWith("{")) {
             uriVariables[templateParts[i].slice(1, -1)] = pathParts[i];
+        }
+    }
+
+    const fieldsType = getFieldsType({ model, config });
+
+    for (const [key, value] of Object.entries(uriVariables)) {
+        const fieldKey = key as keyof typeof fieldsType;
+        if (!fieldsType[fieldKey]) {
+            throw new Error(`Field ${fieldKey} not found in model ${model}`);
+        }
+
+        const fieldRef = fieldsType[fieldKey] as FieldRef<any, any>;
+
+        if (fieldRef.typeName === "Int") {
+            uriVariables[key] = parseInt(value as string, 10);
         }
     }
 
