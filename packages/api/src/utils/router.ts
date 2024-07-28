@@ -8,7 +8,7 @@ const splitPath = (path: string) => {
     return path.split("/").filter((part) => part !== "");
 };
 
-async function buildUriVariables<TModel extends PrismaModelName>({
+function buildUriVariables<TModel extends PrismaModelName>({
     path,
     operation,
     prefix
