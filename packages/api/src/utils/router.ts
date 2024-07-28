@@ -51,14 +51,15 @@ function buildUriVariables<TModel extends PrismaModelName>({
 
     for (const [key, value] of Object.entries(uriVariables)) {
         const fieldKey = key as keyof typeof fieldsType;
+
         if (!fieldsType[fieldKey]) {
             throw new Error(`Field ${fieldKey} not found in model ${model}`);
         }
 
-        const fieldRef = fieldsType[fieldKey] as FieldRef<any, any>;
+        const fieldRef = fieldsType[fieldKey] as FieldRef<TModel, unknown>;
 
         if (fieldRef.typeName === "Int") {
-            uriVariables[key] = parseInt(value as string, 10);
+            uriVariables[key] = parseInt(value as string);
         }
     }
 
