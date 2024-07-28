@@ -11,7 +11,7 @@ async function buildContext<TModel extends PrismaModelName>({
     model: TModel;
     object: ModelResult<TModel> | undefined;
 }): Promise<Context<TModel>> {
-    const security = await config.providers.auth(request);
+    const security = (await config.providers.auth?.(request)) ?? {};
 
     const context = {
         model,
