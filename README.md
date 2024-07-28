@@ -3,7 +3,6 @@
 > [!IMPORTANT]
 > **This project is currently in development and not yet stable.**
 
-
 This utility provides a streamlined approach to creating APIs in Next.js using Prisma as the ORM and Zod for validation. It enables the creation of secure, validated, and type-safe API endpoints with minimal boilerplate code.
 
 ## Table of Contents
