@@ -23,9 +23,6 @@ export type ModelWhere<TModel extends PrismaModelName> =
 export type ModelSelect<TModel extends PrismaModelName> =
     PrismaModel<TModel>["operations"]["findMany"]["args"]["select"];
 
-export type ModelInclude<TModel extends PrismaModelName> =
-    PrismaModel<TModel>["operations"]["findMany"]["args"]["select"];
-
 export type ModelDistinct<TModel extends PrismaModelName> =
     PrismaModel<TModel>["operations"]["findMany"]["args"]["distinct"];
 
@@ -82,6 +79,7 @@ export type PostOperation<TModel extends PrismaModelName> =
     BaseOperation<TModel> &
         MutationOperation<TModel> & {
             operation: MutationOperations["post"];
+            select?: ModelSelect<TModel>;
         };
 
 export type GetOperation<TModel extends PrismaModelName> =
