@@ -1,25 +1,29 @@
 {
-    "name": "illostack",
-    "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
-    "scripts": {
-        "prisma": "prisma",
-        "generate": "prisma generate",
-        "app:dev": "yarn workspace @illostack/app dev",
-        "test": "vitest"
-    },
-    "dependencies": {
-        "@prisma/client": "^5.17.0"
-    },
-    "devDependencies": {
-        "@vitejs/plugin-react": "^4.3.1",
-        "eslint": "^8",
-        "eslint-config-next": "14.2.5",
-        "jsdom": "^24.1.1",
-        "typescript": "^5",
-        "vitest": "^2.0.4",
-        "prisma": "^5.17.0"
-    }
+  "name": "illostack",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "prisma": "prisma",
+    "generate": "prisma generate",
+    "app:dev": "yarn workspace @illostack/app dev",
+    "test": "vitest",
+    "prettier": "prettier --write --ignore-unknown ./packages",
+    "prettier:check": "prettier --check --ignore-unknown ./packages"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.17.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "jsdom": "^24.1.1",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "prisma": "^5.17.0",
+    "typescript": "^5",
+    "vitest": "^2.0.4"
+  }
 }

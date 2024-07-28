@@ -1,0 +1,4 @@
+.next
+bun.lockb
+.db-*
+node_modules
