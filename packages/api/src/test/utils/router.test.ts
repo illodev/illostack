@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 
+import { PrismaClient } from "@prisma/client";
 import {
     createDeleteOperation,
     createGetCollectionOperation,
@@ -8,12 +9,18 @@ import {
     createPostOperation,
     createPutOperation
 } from "../../operations";
-import { Operation, Resources } from "../../types";
+import { Config, Operation, Resources } from "../../types";
 import {
     buildUriVariables,
     getPathFromRequest,
     matchRoute
 } from "../../utils/router";
+
+const config: Config = {
+    providers: {
+        database: new PrismaClient()
+    }
+};
 
 const resources: Resources = {
     user: {
@@ -81,7 +88,13 @@ describe("buildUriVariables", () => {
         };
         const prefix = "/api";
 
-        const uriVariables = buildUriVariables({ path, operation, prefix });
+        const uriVariables = buildUriVariables({
+            path,
+            operation,
+            prefix,
+            model: "user",
+            config
+        });
 
         expect(uriVariables).toEqual({});
     });
@@ -94,24 +107,56 @@ describe("buildUriVariables", () => {
         };
         const prefix = "/api";
 
-        const uriVariables = buildUriVariables({ path, operation, prefix });
+        const uriVariables = buildUriVariables({
+            path,
+            operation,
+            prefix,
+            model: "user",
+            config
+        });
 
         expect(uriVariables).toEqual({ id: "123" });
     });
 
-    it("should handle multiple variables in the template", () => {
-        const path = "/api/users/123/posts/456";
+    it("should error when a uriVariable not in model", () => {
+        const path = "/api/users/123";
         const operation: Operation<"user"> = {
             operation: "get",
-            uriTemplate: "/users/{userId}/posts/{postId}"
+            uriTemplate: "/users/{userId}"
         };
         const prefix = "/api";
 
-        const uriVariables = buildUriVariables({ path, operation, prefix });
+        expect(() =>
+            buildUriVariables({
+                path,
+                operation,
+                prefix,
+                model: "user",
+                config
+            })
+        ).toThrowError();
+    });
 
-        expect(uriVariables).toEqual({ userId: "123", postId: "456" });
+    it("should handle a prefix with a trailing slash", () => {
+        const path = "/api/users/123";
+        const operation: Operation<"user"> = {
+            operation: "get",
+            uriTemplate: "/users/{id}"
+        };
+        const prefix = "/api/";
+
+        const uriVariables = buildUriVariables({
+            path,
+            operation,
+            prefix,
+            model: "user",
+            config
+        });
+
+        expect(uriVariables).toEqual({ id: "123" });
     });
 });
+
 describe("getPathFromRequest", () => {
     it("should return the pathname from the request URL", () => {
         const request = new Request("https://example.com/api/users/123", {

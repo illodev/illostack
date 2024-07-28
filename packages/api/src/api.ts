@@ -40,10 +40,12 @@ export function createRouteHandler(
 
             const { model, operation } = route;
 
-            const uriVariables = await buildUriVariables({
+            const uriVariables = buildUriVariables({
                 path,
                 operation,
-                prefix
+                prefix,
+                model,
+                config
             });
 
             const object = await getObject({ model, uriVariables, config });
