@@ -9,6 +9,12 @@ async function getObject<TModel extends PrismaModelName>({
     uriVariables: Record<string, string | number>;
     config: Config;
 }) {
+    // If there are no variables in the URI, an object cannot be searched, it is understood that
+    // it is a collection request or the creation of an object
+    if (Object.keys(uriVariables).length === 0) {
+        return null;
+    }
+
     try {
         const object = await (
             config.providers.database[model] as any
