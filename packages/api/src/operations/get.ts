@@ -15,7 +15,7 @@ async function getHandler<
     operation: GetOperation<TModel>;
     uriVariables: UriVariables;
     context: TContext;
-}) {
+}): Promise<Response> {
     const { orderBy, where, select, distinct } = operation;
 
     const prismaModel = context.db[model];

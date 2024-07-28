@@ -20,7 +20,7 @@ async function postHandler<
     operation: PostOperation<TModel>;
     uriVariables: UriVariables;
     context: TContext;
-}) {
+}): Promise<Response> {
     const data = operation.inputValidation?.parse(request.body) || request.body;
 
     const { select } = operation;
