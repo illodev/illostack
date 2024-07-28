@@ -20,21 +20,17 @@ async function getHandler<
 
     const prismaModel = context.db[model];
 
-    if ("findUnique" in prismaModel) {
-        const data = await (prismaModel as any).findUnique({
-            where: {
-                ...where,
-                id: uriVariables.id
-            },
-            orderBy,
-            select,
-            distinct
-        });
+    const result = await (prismaModel as any).findUnique({
+        where: {
+            ...uriVariables,
+            ...where
+        },
+        orderBy,
+        select,
+        distinct
+    });
 
-        return Response.json(data);
-    }
-
-    return Response.json({ message: "Not found" }, { status: 404 });
+    return Response.json(result);
 }
 
 function createGetOperation<TModel extends PrismaModelName>(

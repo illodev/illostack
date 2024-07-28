@@ -23,14 +23,14 @@ async function getCollectionHandler<
 }) {
     const { orderBy, where, select, distinct } = operation;
 
-    const users = await (context.db[model] as any).findMany({
+    const data = await (context.db[model] as any).findMany({
         orderBy,
         where,
         select,
         distinct
     });
 
-    return Response.json(users);
+    return Response.json(data);
 }
 
 function createGetCollectionOperation<TModel extends PrismaModelName>(
