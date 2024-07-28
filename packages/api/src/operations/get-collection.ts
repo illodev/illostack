@@ -20,7 +20,7 @@ async function getCollectionHandler<
     operation: GetCollectionOperation<TModel>;
     uriVariables: UriVariables;
     context: TContext;
-}) {
+}): Promise<Response> {
     const { orderBy, where, select, distinct } = operation;
 
     const data = await (context.db[model] as any).findMany({

@@ -1,8 +1,12 @@
 {
     "name": "@illostack/api",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "private": true,
     "exports": "./src/index.ts",
+    "scripts": {
+        "start": "ts-node src/index.ts",
+        "build": "tsc"
+    },
     "devDependencies": {
         "@types/pluralize": "^0.0.33",
         "zod": "^3.23.8"

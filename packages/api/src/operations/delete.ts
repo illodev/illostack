@@ -20,7 +20,7 @@ async function deleteHandler<
     operation: DeleteOperation<TModel>;
     uriVariables: UriVariables;
     context: TContext;
-}) {
+}): Promise<Response> {
     const { where, select } = operation;
 
     const result = await (context.db[model] as any).delete({

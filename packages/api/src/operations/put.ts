@@ -15,7 +15,7 @@ async function putHandler<
     operation: PutOperation<TModel>;
     uriVariables: UriVariables;
     context: TContext;
-}) {
+}): Promise<Response> {
     const data = operation.inputValidation?.parse(request.body) || request.body;
 
     const { where, select } = operation;

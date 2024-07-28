@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "declarationMap": true,
         "composite": true,
         "target": "ES6",
         "module": "commonjs",

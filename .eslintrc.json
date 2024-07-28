@@ -1,0 +1,22 @@
+{
+    "extends": [
+        "prettier",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "plugins": ["unicorn"],
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "prefer-const": "error",
+        "react-hooks/exhaustive-deps": "off",
+        "unicorn/filename-case": [
+            "error",
+            {
+                "case": "kebabCase",
+                "ignore": ["^[a-z0-9]+(?:-[a-z0-9]+)*$"]
+            }
+        ]
+    }
+}
