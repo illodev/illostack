@@ -23,11 +23,14 @@ async function postHandler<
 }) {
     const data = operation.inputValidation?.parse(request.body) || request.body;
 
-    const user = await (context.db[model] as any).create({
-        data
+    const { select } = operation;
+
+    const result = await (context.db[model] as any).create({
+        data,
+        select
     });
 
-    return Response.json(user);
+    return Response.json(result);
 }
 
 function createPostOperation<TModel extends PrismaModelName>(

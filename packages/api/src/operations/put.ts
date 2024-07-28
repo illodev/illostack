@@ -18,12 +18,18 @@ async function putHandler<
 }) {
     const data = operation.inputValidation?.parse(request.body) || request.body;
 
-    const user = await (context.db[model] as any).update({
-        where: { id: uriVariables.id },
-        data
+    const { where, select } = operation;
+
+    const result = await (context.db[model] as any).update({
+        data,
+        where: {
+            ...uriVariables,
+            ...where
+        },
+        select
     });
 
-    return Response.json(user);
+    return Response.json(result);
 }
 
 function createPutOperation<TModel extends PrismaModelName>(

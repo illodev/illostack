@@ -21,11 +21,17 @@ async function deleteHandler<
     uriVariables: UriVariables;
     context: TContext;
 }) {
-    const user = await (context.db[model] as any).delete({
-        where: { id: uriVariables.id }
+    const { where, select } = operation;
+
+    const result = await (context.db[model] as any).delete({
+        where: {
+            ...uriVariables,
+            ...where
+        },
+        select
     });
 
-    return Response.json(user);
+    return Response.json(result);
 }
 
 function createDeleteOperation<TModel extends PrismaModelName>(
