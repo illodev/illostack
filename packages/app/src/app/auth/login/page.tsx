@@ -16,7 +16,7 @@ const Signin: NextPage = () => {
         const result = await signIn("credentials", {
             redirect: false,
             email,
-            password,
+            password
         });
 
         if (result?.ok) {
@@ -36,7 +36,7 @@ const Signin: NextPage = () => {
                 <div>
                     <label
                         htmlFor="email"
-                        className="inline-block w-32  text-white"
+                        className="inline-block w-32 text-white"
                     >
                         Email
                     </label>
@@ -51,7 +51,7 @@ const Signin: NextPage = () => {
                 <div>
                     <label
                         htmlFor="password"
-                        className="inline-block w-32  text-white"
+                        className="inline-block w-32 text-white"
                     >
                         Password
                     </label>

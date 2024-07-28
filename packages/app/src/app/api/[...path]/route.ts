@@ -8,7 +8,7 @@ import {
     createGetOperation,
     createPostOperation,
     createPutOperation,
-    createRouteHandler,
+    createRouteHandler
 } from "@illostack/api";
 
 const handler = createRouteHandler(
@@ -19,35 +19,35 @@ const handler = createRouteHandler(
                 operations: [
                     createGetCollectionOperation({
                         uriTemplate: "/users",
-                        security: ({ user }) => !!user,
+                        security: ({ user }) => !!user
                     }),
                     createGetOperation({
                         uriTemplate: "/users/{id}",
-                        security: ({ object, user }) => object?.id === user.id,
+                        security: ({ object, user }) => object?.id === user.id
                     }),
                     createPostOperation({
                         uriTemplate: "/users",
                         inputValidation: z.object({
                             name: z.string(),
-                            email: z.string().email(),
-                        }),
+                            email: z.string().email()
+                        })
                     }),
                     createPutOperation({
                         uriTemplate: "/users/{id}",
                         security: ({ object, user }) => object?.id === user.id,
                         inputValidation: z.object({
                             name: z.string().optional(),
-                            email: z.string().email().optional(),
-                        }),
+                            email: z.string().email().optional()
+                        })
                     }),
                     createDeleteOperation({
                         uriTemplate: "/users/{id}",
-                        security: ({ object, user }) => object?.id === user.id,
-                    }),
-                ],
+                        security: ({ object, user }) => object?.id === user.id
+                    })
+                ]
             },
-            account: {},
-        },
+            account: {}
+        }
     },
     {
         providers: {
@@ -57,10 +57,10 @@ const handler = createRouteHandler(
 
                 return {
                     isAuthenticated: !!session,
-                    user: session?.user,
+                    user: session?.user
                 };
-            },
-        },
+            }
+        }
     }
 );
 
@@ -69,5 +69,5 @@ export {
     handler as GET,
     handler as PATCH,
     handler as POST,
-    handler as PUT,
+    handler as PUT
 };

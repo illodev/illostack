@@ -4,7 +4,7 @@ async function buildContext<TModel extends PrismaModelName>({
     config,
     request,
     model,
-    object,
+    object
 }: {
     config: Config;
     request: Request;
@@ -17,10 +17,10 @@ async function buildContext<TModel extends PrismaModelName>({
         model,
         security: {
             object,
-            ...security,
+            ...security
         },
         previousObject: object,
-        db: config.providers.database,
+        db: config.providers.database
     };
 
     return context;

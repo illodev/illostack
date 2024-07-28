@@ -4,7 +4,7 @@ import { compare, hash } from "bcryptjs";
 import {
     getServerSession,
     type DefaultSession,
-    type NextAuthOptions,
+    type NextAuthOptions
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -22,7 +22,7 @@ declare module "next-auth" {
 
 export const authOptions: NextAuthOptions = {
     session: {
-        strategy: "jwt",
+        strategy: "jwt"
     },
     callbacks: {
         session({ session, token }) {
@@ -30,30 +30,30 @@ export const authOptions: NextAuthOptions = {
                 session.user.id = token.sub!;
             }
             return session;
-        },
+        }
     },
     adapter: PrismaAdapter(db) as Adapter,
     providers: [
         CredentialsProvider({
             credentials: {
                 email: { type: "email" },
-                password: { type: "password" },
+                password: { type: "password" }
             },
-            authorize: authorize(db),
+            authorize: authorize(db)
         }),
         CredentialsProvider({
             id: "signup",
             type: "credentials",
             credentials: {
                 email: { type: "email" },
-                password: { type: "password" },
+                password: { type: "password" }
             },
-            authorize: signup(db),
-        }),
+            authorize: signup(db)
+        })
     ],
     pages: {
-        signIn: loginRoute,
-    },
+        signIn: loginRoute
+    }
 };
 
 function signup(prisma: PrismaClient) {
@@ -67,7 +67,7 @@ function signup(prisma: PrismaClient) {
             throw new Error('"password" is required in credentials');
 
         const existingUser = await prisma.user.findFirst({
-            where: { email: credentials.email },
+            where: { email: credentials.email }
         });
 
         if (existingUser) throw new Error("User already exists");
@@ -77,8 +77,8 @@ function signup(prisma: PrismaClient) {
         const user = await prisma.user.create({
             data: {
                 email: credentials.email,
-                password: hashedPassword,
-            },
+                password: hashedPassword
+            }
         });
 
         return { id: user.id, email: user.email };
@@ -96,7 +96,7 @@ function authorize(prisma: PrismaClient) {
             throw new Error('"password" is required in credentials');
         const maybeUser = await prisma.user.findFirst({
             where: { email: credentials.email },
-            select: { id: true, email: true, password: true },
+            select: { id: true, email: true, password: true }
         });
         if (!maybeUser?.password) return null;
         // verify the input password with stored hash

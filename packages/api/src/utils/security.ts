@@ -3,12 +3,12 @@ import {
     ModelResult,
     Operation,
     PrismaModelName,
-    User,
+    User
 } from "../types";
 
 async function checkSecurity<TModel extends PrismaModelName>({
     operation,
-    context,
+    context
 }: {
     operation: Operation<TModel>;
     context: Context<TModel>;
@@ -16,7 +16,7 @@ async function checkSecurity<TModel extends PrismaModelName>({
     if (operation.security) {
         return operation.security({
             object: context.previousObject as ModelResult<TModel>,
-            user: context.security.user as User,
+            user: context.security.user as User
         });
     }
 
