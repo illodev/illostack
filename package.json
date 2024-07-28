@@ -1,29 +1,52 @@
 {
-  "name": "illostack",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "prisma": "prisma",
-    "generate": "prisma generate",
-    "app:dev": "yarn workspace @illostack/app dev",
-    "test": "vitest",
-    "prettier": "prettier --write --ignore-unknown ./packages",
-    "prettier:check": "prettier --check --ignore-unknown ./packages"
-  },
-  "dependencies": {
-    "@prisma/client": "^5.17.0"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5",
-    "jsdom": "^24.1.1",
-    "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.5",
-    "prisma": "^5.17.0",
-    "typescript": "^5",
-    "vitest": "^2.0.4"
-  }
+    "name": "illostack",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "prisma": "prisma",
+        "generate": "prisma generate",
+        "test": "vitest",
+        "api:build": "pnpm --filter @illostack/api build",
+        "prettier": "prettier --write --ignore-unknown ./packages",
+        "prettier:check": "prettier --check --ignore-unknown ./packages",
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "prepare": "husky",
+        "api": "pnpm --filter @illostack/api",
+        "example": "pnpm --filter @illostack/api-example"
+    },
+    "lint-staged": {
+        "**/*.{js,ts,tsx}": [
+            "eslint --fix"
+        ],
+        "**/*": "prettier --write --ignore-unknown"
+    },
+    "dependencies": {
+        "@prisma/client": "^5.17.0"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^19.3.0",
+        "@commitlint/config-conventional": "^19.2.2",
+        "@typescript-eslint/eslint-plugin": "^7.17.0",
+        "@vitejs/plugin-react": "^4.3.1",
+        "eslint": "^8",
+        "eslint-config-next": "14.2.5",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "eslint-plugin-unicorn": "^55.0.0",
+        "husky": "^9.1.3",
+        "jsdom": "^24.1.1",
+        "lint-staged": "^15.2.7",
+        "prettier": "^3.3.3",
+        "prettier-plugin-tailwindcss": "^0.6.5",
+        "prisma": "^5.17.0",
+        "typescript": "^5",
+        "vitest": "^2.0.4"
+    },
+    "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e"
 }
