@@ -171,6 +171,6 @@ export type AuthProvider = (req: Request) => Promise<{
 export type Config = {
     providers: {
         database: PrismaClient;
-        auth: AuthProvider;
+        auth?: AuthProvider;
     };
 };
