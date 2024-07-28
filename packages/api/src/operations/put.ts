@@ -8,7 +8,7 @@ async function putHandler<
     model,
     operation,
     uriVariables,
-    context,
+    context
 }: {
     request: Request;
     model: PrismaModelName;
@@ -20,7 +20,7 @@ async function putHandler<
 
     const user = await (context.db[model] as any).update({
         where: { id: uriVariables.id },
-        data,
+        data
     });
 
     return Response.json(user);
@@ -31,7 +31,7 @@ function createPutOperation<TModel extends PrismaModelName>(
 ): PutOperation<TModel> {
     return {
         ...operation,
-        operation: "put",
+        operation: "put"
     };
 }
 

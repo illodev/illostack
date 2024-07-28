@@ -8,7 +8,7 @@ async function getHandler<
     model,
     operation,
     uriVariables,
-    context,
+    context
 }: {
     request: Request;
     model: PrismaModelName;
@@ -24,11 +24,11 @@ async function getHandler<
         const data = await (prismaModel as any).findUnique({
             where: {
                 ...where,
-                id: uriVariables.id,
+                id: uriVariables.id
             },
             orderBy,
             select,
-            distinct,
+            distinct
         });
 
         return Response.json(data);
@@ -42,7 +42,7 @@ function createGetOperation<TModel extends PrismaModelName>(
 ): GetOperation<TModel> {
     return {
         ...operation,
-        operation: "get",
+        operation: "get"
     };
 }
 

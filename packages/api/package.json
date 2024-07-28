@@ -1,13 +1,13 @@
 {
-  "name": "@illostack/api",
-  "version": "0.1.0",
-  "private": true,
-  "exports": "./src/index.ts",
-  "devDependencies": {
-    "@types/pluralize": "^0.0.33",
-    "zod": "^3.23.8"
-  },
-  "dependencies": {
-    "pluralize": "^8.0.0"
-  }
+    "name": "@illostack/api",
+    "version": "0.1.0",
+    "private": true,
+    "exports": "./src/index.ts",
+    "devDependencies": {
+        "@types/pluralize": "^0.0.33",
+        "zod": "^3.23.8"
+    },
+    "dependencies": {
+        "pluralize": "^8.0.0"
+    }
 }

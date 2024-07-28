@@ -5,7 +5,7 @@ import {
     createGetOperation,
     createPatchOperation,
     createPostOperation,
-    createPutOperation,
+    createPutOperation
 } from "../operations";
 import { Config, PrismaModelName } from "../types";
 
@@ -37,11 +37,11 @@ const excludeMethods = [
     "_engine",
     "_requestHandler",
     "_metrics",
-    "_appliedParent",
+    "_appliedParent"
 ] as const;
 
 function getDefaultOperations<TModel extends PrismaModelName>({
-    model,
+    model
 }: {
     model: TModel;
 }) {
@@ -49,23 +49,23 @@ function getDefaultOperations<TModel extends PrismaModelName>({
 
     return [
         createGetCollectionOperation({
-            uriTemplate: `/${pluralModel}`,
+            uriTemplate: `/${pluralModel}`
         }),
         createGetOperation({
-            uriTemplate: `/${pluralModel}/{id}`,
+            uriTemplate: `/${pluralModel}/{id}`
         }),
         createPostOperation({
-            uriTemplate: `/${pluralModel}`,
+            uriTemplate: `/${pluralModel}`
         }),
         createPutOperation({
-            uriTemplate: `/${pluralModel}/{id}`,
+            uriTemplate: `/${pluralModel}/{id}`
         }),
         createPatchOperation({
-            uriTemplate: `/${pluralModel}/{id}`,
+            uriTemplate: `/${pluralModel}/{id}`
         }),
         createDeleteOperation({
-            uriTemplate: `/${pluralModel}/{id}`,
-        }),
+            uriTemplate: `/${pluralModel}/{id}`
+        })
     ];
 }
 
@@ -85,7 +85,7 @@ function getDefaultResources({ config }: { config: Config }) {
 
     for (const model of models) {
         resources[model] = {
-            operations: getDefaultOperations({ model }),
+            operations: getDefaultOperations({ model })
         };
     }
 

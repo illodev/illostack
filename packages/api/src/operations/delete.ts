@@ -2,7 +2,7 @@ import {
     Context,
     DeleteOperation,
     PrismaModelName,
-    UriVariables,
+    UriVariables
 } from "../types";
 
 async function deleteHandler<
@@ -13,7 +13,7 @@ async function deleteHandler<
     model,
     operation,
     uriVariables,
-    context,
+    context
 }: {
     request: Request;
     model: PrismaModelName;
@@ -22,7 +22,7 @@ async function deleteHandler<
     context: TContext;
 }) {
     const user = await (context.db[model] as any).delete({
-        where: { id: uriVariables.id },
+        where: { id: uriVariables.id }
     });
 
     return Response.json(user);
@@ -33,7 +33,7 @@ function createDeleteOperation<TModel extends PrismaModelName>(
 ): DeleteOperation<TModel> {
     return {
         ...operation,
-        operation: "delete",
+        operation: "delete"
     };
 }
 

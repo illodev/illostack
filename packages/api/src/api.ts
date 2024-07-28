@@ -4,7 +4,7 @@ import {
     getHandler,
     patchHandler,
     postHandler,
-    putHandler,
+    putHandler
 } from "./operations";
 import { Config, Schema } from "./types";
 import { buildContext } from "./utils/context";
@@ -13,7 +13,7 @@ import { getObject } from "./utils/object";
 import {
     buildUriVariables,
     getPathFromRequest,
-    matchRoute,
+    matchRoute
 } from "./utils/router";
 import { checkSecurity } from "./utils/security";
 
@@ -28,7 +28,7 @@ export function createRouteHandler(
         try {
             const {
                 prefix = "/api",
-                resources = getDefaultResources({ config }),
+                resources = getDefaultResources({ config })
             } = schema;
 
             const path = getPathFromRequest({ request });
@@ -43,7 +43,7 @@ export function createRouteHandler(
             const uriVariables = await buildUriVariables({
                 path,
                 operation,
-                prefix,
+                prefix
             });
 
             const object = await getObject({ model, uriVariables, config });
@@ -52,7 +52,7 @@ export function createRouteHandler(
                 config,
                 request,
                 model,
-                object,
+                object
             });
 
             if (!(await checkSecurity({ operation, context }))) {
@@ -69,7 +69,7 @@ export function createRouteHandler(
                         model,
                         operation,
                         uriVariables,
-                        context,
+                        context
                     });
                 case "getCollection":
                     return getCollectionHandler({
@@ -77,7 +77,7 @@ export function createRouteHandler(
                         model,
                         operation,
                         uriVariables,
-                        context,
+                        context
                     });
                 case "post":
                     return postHandler({
@@ -85,7 +85,7 @@ export function createRouteHandler(
                         model,
                         operation,
                         uriVariables,
-                        context,
+                        context
                     });
                 case "put":
                     return putHandler({
@@ -93,7 +93,7 @@ export function createRouteHandler(
                         model,
                         operation,
                         uriVariables,
-                        context,
+                        context
                     });
                 case "patch":
                     return patchHandler({
@@ -101,7 +101,7 @@ export function createRouteHandler(
                         model,
                         operation,
                         uriVariables,
-                        context,
+                        context
                     });
                 case "delete":
                     return deleteHandler({
@@ -109,7 +109,7 @@ export function createRouteHandler(
                         model,
                         operation,
                         uriVariables,
-                        context,
+                        context
                     });
                 default:
                     return Response.json(

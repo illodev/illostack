@@ -5,7 +5,7 @@ import {
     createGetCollectionOperation,
     createGetOperation,
     createPostOperation,
-    createPutOperation,
+    createPutOperation
 } from "../operations";
 import { Resources } from "../types";
 import { matchRoute } from "../utils/router";
@@ -15,11 +15,11 @@ const resources: Resources = {
         operations: [
             createGetCollectionOperation({
                 uriTemplate: "/users",
-                security: ({ user }) => !!user,
+                security: ({ user }) => !!user
             }),
             createGetOperation({
                 uriTemplate: "/users/{id}",
-                security: ({ object, user }) => object?.id === user.id,
+                security: ({ object, user }) => object?.id === user.id
             }),
             createPostOperation({
                 uriTemplate: "/users",
@@ -27,8 +27,8 @@ const resources: Resources = {
                 inputValidation: z.object({
                     name: z.string(),
                     email: z.string().email(),
-                    role: z.string().optional(),
-                }),
+                    role: z.string().optional()
+                })
             }),
             createPutOperation({
                 uriTemplate: "/users/{id}",
@@ -36,15 +36,15 @@ const resources: Resources = {
                 inputValidation: z.object({
                     name: z.string().optional(),
                     email: z.string().email().optional(),
-                    role: z.string().optional(),
-                }),
+                    role: z.string().optional()
+                })
             }),
             createDeleteOperation({
                 uriTemplate: "/users/{id}",
-                security: ({ object, user }) => object?.id === user.id,
-            }),
-        ],
-    },
+                security: ({ object, user }) => object?.id === user.id
+            })
+        ]
+    }
 };
 
 describe("matchRoute", () => {
@@ -52,7 +52,7 @@ describe("matchRoute", () => {
         const route = matchRoute({
             path: "/api/users/123",
             resources,
-            prefix: "/api",
+            prefix: "/api"
         });
         expect(route?.operation.uriTemplate).toBe("/users/{id}");
     });
@@ -61,7 +61,7 @@ describe("matchRoute", () => {
         const route = matchRoute({
             path: "/api/posts/123",
             resources,
-            prefix: "/api",
+            prefix: "/api"
         });
         expect(route).toBeUndefined();
     });

@@ -45,11 +45,11 @@ export default withAuth(
         callbacks: {
             authorized: () => {
                 return true;
-            },
-        },
+            }
+        }
     }
 );
 
 export const config = {
-    matcher: ["/((?!api|static|.*\\..*|_next|favicon.png|robots.txt).*)"],
+    matcher: ["/((?!api|static|.*\\..*|_next|favicon.png|robots.txt).*)"]
 };

@@ -2,7 +2,7 @@ import {
     Context,
     GetCollectionOperation,
     PrismaModelName,
-    UriVariables,
+    UriVariables
 } from "../types";
 
 async function getCollectionHandler<
@@ -13,7 +13,7 @@ async function getCollectionHandler<
     model,
     operation,
     uriVariables,
-    context,
+    context
 }: {
     request: Request;
     model: PrismaModelName;
@@ -27,7 +27,7 @@ async function getCollectionHandler<
         orderBy,
         where,
         select,
-        distinct,
+        distinct
     });
 
     return Response.json(users);
@@ -38,7 +38,7 @@ function createGetCollectionOperation<TModel extends PrismaModelName>(
 ): GetCollectionOperation<TModel> {
     return {
         ...operation,
-        operation: "getCollection",
+        operation: "getCollection"
     };
 }
 

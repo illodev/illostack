@@ -54,7 +54,7 @@ const Signup: NextPage = () => {
                 <div>
                     <label
                         htmlFor="password"
-                        className="inline-block w-32 text-white "
+                        className="inline-block w-32 text-white"
                     >
                         Password
                     </label>

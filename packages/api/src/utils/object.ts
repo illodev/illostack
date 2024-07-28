@@ -3,7 +3,7 @@ import { Config, PrismaModelName } from "../types";
 async function getObject<TModel extends PrismaModelName>({
     model,
     uriVariables,
-    config,
+    config
 }: {
     model: TModel;
     uriVariables: Record<string, string | number>;
@@ -13,7 +13,7 @@ async function getObject<TModel extends PrismaModelName>({
         const object = await (
             config.providers.database[model] as any
         ).findUnique({
-            where: uriVariables,
+            where: uriVariables
         });
 
         return object;

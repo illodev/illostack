@@ -2,7 +2,7 @@ import {
     Context,
     PostOperation,
     PrismaModelName,
-    UriVariables,
+    UriVariables
 } from "../types";
 
 async function postHandler<
@@ -13,7 +13,7 @@ async function postHandler<
     model,
     operation,
     uriVariables,
-    context,
+    context
 }: {
     request: Request;
     model: PrismaModelName;
@@ -24,7 +24,7 @@ async function postHandler<
     const data = operation.inputValidation?.parse(request.body) || request.body;
 
     const user = await (context.db[model] as any).create({
-        data,
+        data
     });
 
     return Response.json(user);
@@ -35,7 +35,7 @@ function createPostOperation<TModel extends PrismaModelName>(
 ): PostOperation<TModel> {
     return {
         ...operation,
-        operation: "post",
+        operation: "post"
     };
 }
 

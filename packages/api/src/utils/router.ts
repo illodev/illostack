@@ -11,7 +11,7 @@ const splitPath = (path: string) => {
 async function buildUriVariables<TModel extends PrismaModelName>({
     path,
     operation,
-    prefix,
+    prefix
 }: {
     path: string;
     operation: Operation<TModel>;
@@ -38,7 +38,7 @@ async function buildUriVariables<TModel extends PrismaModelName>({
 function matchRoute<TModel extends PrismaModelName>({
     path,
     resources,
-    prefix,
+    prefix
 }: {
     path: string;
     resources: Resources;
@@ -82,7 +82,7 @@ function matchRoute<TModel extends PrismaModelName>({
 
                     return {
                         model: model as TModel,
-                        operation: operation as Operation<TModel>,
+                        operation: operation as Operation<TModel>
                     };
                 }
             }

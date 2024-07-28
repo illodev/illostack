@@ -2,7 +2,7 @@ import {
     Context,
     PatchOperation,
     PrismaModelName,
-    UriVariables,
+    UriVariables
 } from "../types";
 
 async function patchHandler<
@@ -13,7 +13,7 @@ async function patchHandler<
     model,
     operation,
     uriVariables,
-    context,
+    context
 }: {
     request: Request;
     model: PrismaModelName;
@@ -25,7 +25,7 @@ async function patchHandler<
 
     const user = await (context.db[model] as any).update({
         where: { id: uriVariables.id },
-        data,
+        data
     });
 
     return Response.json(user);
@@ -36,7 +36,7 @@ function createPatchOperation<TModel extends PrismaModelName>(
 ): PatchOperation<TModel> {
     return {
         ...operation,
-        operation: "patch",
+        operation: "patch"
     };
 }
 
