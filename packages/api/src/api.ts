@@ -31,14 +31,14 @@ export function createRouteHandler(
                 resources = getDefaultResources({ config })
             } = schema;
 
-            const path = getPathFromRequest({ request });
+            const path = getPathFromRequest(request);
             const route = matchRoute({ path, prefix, resources });
 
             if (!route) {
                 return Response.json({ message: "Not found" }, { status: 404 });
             }
 
-            const { model, operation } = route;
+            const { model, operation, resource } = route;
 
             const uriVariables = buildUriVariables({
                 path,
@@ -57,9 +57,22 @@ export function createRouteHandler(
                 object
             });
 
-            if (!(await checkSecurity({ operation, context }))) {
+            const isAuthorized = await checkSecurity({
+                resource,
+                operation,
+                context
+            });
+
+            if (!isAuthorized) {
+                const message =
+                    operation.securityMessage ||
+                    resource.securityMessage ||
+                    "Unauthorized";
+
                 return Response.json(
-                    { message: operation.securityMessage || "Forbidden" },
+                    {
+                        message
+                    },
                     { status: 403 }
                 );
             }
