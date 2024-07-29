@@ -1,16 +1,23 @@
-import { Config, Context, ModelResult, PrismaModelName } from "../types";
+import {
+    Config,
+    Context,
+    ModelGetQueryResult,
+    PrismaModelName
+} from "../types";
+
+type BuildContextProps<TModel extends PrismaModelName> = {
+    config: Config;
+    request: Request;
+    model: TModel;
+    object: ModelGetQueryResult<TModel> | undefined;
+};
 
 async function buildContext<TModel extends PrismaModelName>({
     config,
     request,
     model,
     object
-}: {
-    config: Config;
-    request: Request;
-    model: TModel;
-    object: ModelResult<TModel> | undefined;
-}): Promise<Context<TModel>> {
+}: BuildContextProps<TModel>): Promise<Context<TModel>> {
     const security = (await config.providers.auth?.(request)) ?? {};
 
     const context = {
