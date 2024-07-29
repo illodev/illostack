@@ -17,8 +17,7 @@
         "lint": "eslint .",
         "format": "prettier --write .",
         "prepare": "husky",
-        "api": "pnpm --filter @illostack/api",
-        "example": "pnpm --filter @illostack/api-example"
+        "example:dev": "pnpm --filter api-example dev"
     },
     "lint-staged": {
         "**/*.{js,ts,tsx}": [
