@@ -1,7 +1,13 @@
 import { FieldRef } from "@prisma/client/runtime/library";
-import { Config, Operation, PrismaModelName, Resources } from "../types";
+import {
+    Config,
+    ModelResource,
+    Operation,
+    PrismaModelName,
+    Resources
+} from "../types";
 
-function getPathFromRequest({ request }: { request: Request }) {
+function getPathFromRequest(request: Request) {
     return new URL(request.url).pathname;
 }
 
@@ -9,15 +15,25 @@ const splitPath = (path: string) => {
     return path.split("/").filter((part) => part !== "");
 };
 
+type GetFieldsTypeProps<TModel extends PrismaModelName> = {
+    model: TModel;
+    config: Config;
+};
+
 function getFieldsType<TModel extends PrismaModelName>({
     model,
     config
-}: {
-    model: TModel;
-    config: Config;
-}) {
+}: GetFieldsTypeProps<TModel>) {
     return config.providers.database[model].fields;
 }
+
+type BuildUriVariablesProps<TModel extends PrismaModelName> = {
+    path: string;
+    operation: Operation<TModel>;
+    prefix: string;
+    model: TModel;
+    config: Config;
+};
 
 function buildUriVariables<TModel extends PrismaModelName>({
     path,
@@ -25,13 +41,7 @@ function buildUriVariables<TModel extends PrismaModelName>({
     prefix,
     model,
     config
-}: {
-    path: string;
-    operation: Operation<TModel>;
-    prefix: string;
-    model: TModel;
-    config: Config;
-}) {
+}: BuildUriVariablesProps<TModel>) {
     const uriVariables: Record<string, string | number> = {};
 
     const pathParts = splitPath(path);
@@ -66,15 +76,17 @@ function buildUriVariables<TModel extends PrismaModelName>({
     return uriVariables;
 }
 
-function matchRoute<TModel extends PrismaModelName>({
-    path,
-    resources,
-    prefix
-}: {
+type MatchRouteProps<TModel extends PrismaModelName> = {
     path: string;
     resources: Resources;
     prefix?: string;
-}) {
+};
+
+const matchRoute = <TModel extends PrismaModelName>({
+    path,
+    resources,
+    prefix
+}: MatchRouteProps<TModel>) => {
     // Split the path into parts
     const parts = splitPath(path);
 
@@ -113,7 +125,8 @@ function matchRoute<TModel extends PrismaModelName>({
 
                     return {
                         model: model as TModel,
-                        operation: operation as Operation<TModel>
+                        operation: operation as Operation<TModel>,
+                        resource: resource as ModelResource<TModel>
                     };
                 }
             }
@@ -121,6 +134,6 @@ function matchRoute<TModel extends PrismaModelName>({
     }
 
     return undefined;
-}
+};
 
 export { buildUriVariables, getPathFromRequest, matchRoute };
