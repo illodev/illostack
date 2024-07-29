@@ -1,4 +1,11 @@
-import { Context, GetOperation, PrismaModelName, UriVariables } from "../types";
+import {
+    Context,
+    GetOperation,
+    ModelGetQueryArgs,
+    ModelGetQueryResult,
+    PrismaModelName,
+    UriVariables
+} from "../types";
 
 async function getHandler<
     TModel extends PrismaModelName,
@@ -18,17 +25,37 @@ async function getHandler<
 }): Promise<Response> {
     const { orderBy, where, select, distinct } = operation;
 
-    const prismaModel = context.db[model];
-
-    const result = await (prismaModel as any).findUnique({
+    const query = {
+        orderBy,
         where: {
             ...uriVariables,
             ...where
         },
-        orderBy,
         select,
         distinct
-    });
+    } as ModelGetQueryArgs<TModel>;
+
+    if (operation.onPreQuery) {
+        await operation.onPreQuery({
+            query,
+            operation,
+            uriVariables,
+            context
+        });
+    }
+
+    const result = (await (context.db[model] as any).findUnique(
+        query
+    )) as ModelGetQueryResult<TModel>;
+
+    if (operation.onPostQuery) {
+        await operation.onPostQuery({
+            data: result,
+            operation,
+            uriVariables,
+            context
+        });
+    }
 
     return Response.json(result);
 }
