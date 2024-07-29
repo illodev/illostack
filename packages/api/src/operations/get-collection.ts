@@ -1,6 +1,8 @@
 import {
     Context,
     GetCollectionOperation,
+    ModelGetCollectionQueryArgs,
+    ModelGetCollectionQueryResult,
     PrismaModelName,
     UriVariables
 } from "../types";
@@ -23,12 +25,37 @@ async function getCollectionHandler<
 }): Promise<Response> {
     const { orderBy, where, select, distinct } = operation;
 
-    const data = await (context.db[model] as any).findMany({
+    const query = {
         orderBy,
-        where,
+        where: {
+            ...uriVariables,
+            ...where
+        },
         select,
         distinct
-    });
+    } as ModelGetCollectionQueryArgs<TModel>;
+
+    if (operation.onPreQuery) {
+        await operation.onPreQuery({
+            query,
+            operation,
+            uriVariables,
+            context
+        });
+    }
+
+    const data = (await (context.db[model] as any).findMany(
+        query
+    )) as ModelGetCollectionQueryResult<TModel>;
+
+    if (operation.onPostQuery) {
+        await operation.onPostQuery({
+            data,
+            operation,
+            uriVariables,
+            context
+        });
+    }
 
     return Response.json(data);
 }
