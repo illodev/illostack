@@ -162,7 +162,7 @@ describe("getPathFromRequest", () => {
         const request = new Request("https://example.com/api/users/123", {
             method: "GET"
         });
-        const path = getPathFromRequest({ request });
+        const path = getPathFromRequest(request);
         expect(path).toBe("/api/users/123");
     });
 
@@ -170,7 +170,7 @@ describe("getPathFromRequest", () => {
         const request = new Request("https://example.com", {
             method: "GET"
         });
-        const path = getPathFromRequest({ request });
+        const path = getPathFromRequest(request);
         expect(path).toBe("/");
     });
 
@@ -181,7 +181,7 @@ describe("getPathFromRequest", () => {
                 method: "GET"
             }
         );
-        const path = getPathFromRequest({ request });
+        const path = getPathFromRequest(request);
         expect(path).toBe("/api/users/123");
     });
 });
