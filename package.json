@@ -11,13 +11,18 @@
         "prisma": "prisma",
         "generate": "prisma generate",
         "test": "vitest",
-        "api:build": "pnpm --filter @illostack/api build",
         "prettier": "prettier --write --ignore-unknown ./packages",
         "prettier:check": "prettier --check --ignore-unknown ./packages",
         "lint": "eslint .",
         "format": "prettier --write .",
         "prepare": "husky",
-        "example:dev": "pnpm --filter api-example dev"
+        "api:build": "pnpm --filter @illostack/api build",
+        "api-example:dev": "pnpm --filter api-example dev",
+        "api-example:build": "pnpm --filter api-example build",
+        "api-example:start": "pnpm --filter api-example start",
+        "web:dev": "pnpm --filter web dev",
+        "web:build": "pnpm --filter web build",
+        "web:start": "pnpm --filter web start"
     },
     "lint-staged": {
         "**/*.{js,ts,tsx}": [
